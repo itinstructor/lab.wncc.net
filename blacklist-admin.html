@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Blacklist Admin</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .subtitle {
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h2 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .input-group {
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-right: 10px;
+        }
+        .btn:hover {
+            background: #5568d3;
+        }
+        .btn-secondary {
+            background: #6c757d;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .btn-danger {
+            background: #dc3545;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+        }
+        .result-clean {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .result-blocked {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .result-error {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+        }
+        .log-viewer {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 6px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff4e5;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .stat-label {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛡️ IP Blacklist Admin</h1>
+        <p class="subtitle">Monitor and test IP blacklist functionality</p>
+    </div>
+
+    <div class="card">
+        <h2>📊 System Status</h2>
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Module Status</div>
+                <div class="stat-number">✓</div>
+                <div class="stat-label">Active</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Cache Duration</div>
+                <div class="stat-number">24h</div>
+                <div class="stat-label">Per IP</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">API Sources</div>
+                <div class="stat-number">3</div>
+                <div class="stat-label">StopForumSpam, blocklist.de, AbuseIPDB</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🔍 Test IP Address</h2>
+        <div class="info-box">
+            <strong>Note:</strong> This tests the blacklist APIs directly. The actual ASP.NET module runs server-side and checks every incoming request automatically.
+        </div>
+        <div class="input-group">
+            <label for="ipAddress">IP Address to Check:</label>
+            <input type="text" id="ipAddress" placeholder="e.g., 8.8.8.8" value="">
+        </div>
+        <button class="btn" onclick="checkIP()">Check IP</button>
+        <button class="btn btn-secondary" onclick="checkMyIP()">Check My IP</button>
+        <div id="result"></div>
+    </div>
+
+    <div class="card">
+        <h2>📝 Recent Logs</h2>
+        <div class="warning-box">
+            <strong>Note:</strong> Log viewing requires server-side implementation. For now, check <code>logs\blacklist_checker.log</code> directly on the server.
+        </div>
+        <button class="btn btn-secondary" onclick="refreshLogs()">Refresh Logs</button>
+        <button class="btn btn-danger" onclick="clearCache()">Clear Cache</button>
+        <div class="log-viewer" id="logViewer">
+No logs available. 
+Check: c:\inetpub\lab.wncc.net\logs\blacklist_checker.log
+
+To view logs via PowerShell:
+  Get-Content logs\blacklist_checker.log -Tail 20
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>⚙️ Configuration</h2>
+        <div class="info-box">
+            <strong>Module Configuration:</strong>
+            <ul style="margin: 10px 0;">
+                <li>Location: <code>web.config</code></li>
+                <li>Module: <code>IPBlacklistModule</code></li>
+                <li>Type: <code>LabWnccNet.IPBlacklistModule, IPBlacklistChecker</code></li>
+            </ul>
+        </div>
+        <div class="info-box">
+            <strong>Whitelisted IPs:</strong>
+            <ul style="margin: 10px 0;">
+                <li>127.0.0.1 (localhost)</li>
+                <li>::1 (IPv6 localhost)</li>
+                <li>192.168.* (private network)</li>
+                <li>10.* (private network)</li>
+            </ul>
+        </div>
+        <div class="warning-box">
+            <strong>AbuseIPDB API Key:</strong> 
+            <span id="apiKeyStatus">Not configured</span>
+            <br>
+            <small>Set environment variable: <code>ABUSEIPDB_API_KEY</code></small>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📚 Quick Reference</h2>
+        <h3>PowerShell Commands</h3>
+        <div class="log-viewer" style="background: #f8f9fa; color: #333;">
+# Build the blacklist checker
+.\build-blacklist.ps1
+
+# Test the blacklist checker
+.\test-blacklist.ps1
+
+# View recent logs
+Get-Content logs\blacklist_checker.log -Tail 20 -Wait
+
+# Restart IIS
+iisreset
+
+# Check if module is loaded
+Get-WebConfiguration -Filter "system.webServer/modules" | 
+    Where-Object { $_.name -like "*Blacklist*" }
+
+# Set AbuseIPDB API key
+[System.Environment]::SetEnvironmentVariable("ABUSEIPDB_API_KEY", "your-key", "Machine")
+        </div>
+    </div>
+
+    <script>
+        async function checkIP() {
+            const ip = document.getElementById('ipAddress').value.trim();
+            const resultDiv = document.getElementById('result');
+            
+            if (!ip) {
+                showResult('Please enter an IP address', 'error');
+                return;
+            }
+            
+            resultDiv.style.display = 'block';
+            resultDiv.className = '';
+            resultDiv.innerHTML = '🔄 Checking IP address...';
+            
+            try {
+                // Check StopForumSpam
+                const sfsResponse = await fetch(`https://api.stopforumspam.org/api?ip=${ip}&json`);
+                const sfsData = await sfsResponse.json();
+                const appears = sfsData.ip?.appears || 0;
+                const frequency = sfsData.ip?.frequency || 0;
+                
+                if (appears > 0) {
+                    showResult(
+                        `🚫 IP ${ip} is BLACKLISTED<br>` +
+                        `Source: StopForumSpam<br>` +
+                        `Frequency: ${frequency} reports<br>` +
+                        `Confidence: ${Math.min(100, frequency * 10)}%`,
+                        'blocked'
+                    );
+                    return;
+                }
+                
+                // Check blocklist.de
+                try {
+                    const blResponse = await fetch(`https://api.blocklist.de/api.php?ip=${ip}`);
+                    const blText = await blResponse.text();
+                    
+                    if (blText.toLowerCase().includes('attacks:') && !blText.toLowerCase().includes('attacks: 0')) {
+                        const match = blText.match(/attacks:\s*(\d+)/i);
+                        showResult(
+                            `🚫 IP ${ip} is BLACKLISTED<br>` +
+                            `Source: blocklist.de<br>` +
+                            `Attacks: ${match ? match[1] : 'unknown'}<br>` +
+                            `Confidence: 80%`,
+                            'blocked'
+                        );
+                        return;
+                    }
+                } catch (e) {
+                    console.log('blocklist.de check failed:', e);
+                }
+                
+                showResult(
+                    `✅ IP ${ip} is CLEAN<br>` +
+                    `Not found in StopForumSpam or blocklist.de databases`,
+                    'clean'
+                );
+                
+            } catch (error) {
+                showResult(`❌ Error checking IP: ${error.message}`, 'error');
+            }
+        }
+        
+        async function checkMyIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                document.getElementById('ipAddress').value = data.ip;
+                checkIP();
+            } catch (error) {
+                showResult(`❌ Error getting your IP: ${error.message}`, 'error');
+            }
+        }
+        
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = message;
+            resultDiv.className = `result-${type}`;
+        }
+        
+        function refreshLogs() {
+            alert('Log refresh requires server-side implementation.\n\nFor now, check logs\\blacklist_checker.log directly on the server.');
+        }
+        
+        function clearCache() {
+            if (confirm('Clear the blacklist cache? This will force fresh API checks for all IPs.')) {
+                alert('Cache clearing requires server-side implementation.\n\nThe cache will automatically expire after 24 hours.');
+            }
+        }
+        
+        // Check for AbuseIPDB API key (this would need server-side check)
+        window.addEventListener('load', () => {
+            // This is just a placeholder - real check needs server-side
+            const apiKeyStatus = document.getElementById('apiKeyStatus');
+            apiKeyStatus.innerHTML = '<span style="color: #856404;">⚠️ Unknown (requires server-side check)</span>';
+        });
+    </script>
+</body>
+</html>

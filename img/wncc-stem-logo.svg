@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#1a472a"/>
+  
+  <!-- Left side - STEM Icons arranged vertically -->
+  <!-- Science - Flask (top left) -->
+  <g transform="translate(200, 150)">
+    <path d="M-30,-40 L-30,0 L-50,40 L-50,50 C-50,60 -40,70 -20,70 L20,70 C40,70 50,60 50,50 L50,40 L30,0 L30,-40 L20,-40 L20,-50 L-20,-50 L-20,-40 Z" 
+          fill="#4a9eff" stroke="#ffffff" stroke-width="3"/>
+    <ellipse cx="0" cy="50" rx="35" ry="10" fill="#6bb4ff" opacity="0.7"/>
+  </g>
+  
+  <!-- Technology - Gear (middle left) -->
+  <g transform="translate(200, 315)">
+    <circle cx="0" cy="0" r="50" fill="#ff6b35" stroke="#ffffff" stroke-width="3"/>
+    <circle cx="0" cy="0" r="22" fill="#1a472a"/>
+    <path d="M-13,-45 L13,-45 L13,-60 L-13,-60 Z M-13,45 L13,45 L13,60 L-13,60 Z M-45,-13 L-45,13 L-60,13 L-60,-13 Z M45,-13 L45,13 L60,13 L60,-13 Z
+             M-32,-32 L-32,-47 L-47,-47 L-47,-32 Z M32,-32 L32,-47 L47,-47 L47,-32 Z M-32,32 L-32,47 L-47,47 L-47,32 Z M32,32 L32,47 L47,47 L47,32 Z" 
+          fill="#ff6b35" stroke="#ffffff" stroke-width="2"/>
+  </g>
+  
+  <!-- Engineering - Hammer & Wrench (bottom left) -->
+  <g transform="translate(200, 480)">
+    <rect x="-50" y="-10" width="100" height="20" fill="#9b59b6" stroke="#ffffff" stroke-width="3" transform="rotate(-45)"/>
+    <rect x="-60" y="-50" width="20" height="40" fill="#9b59b6" stroke="#ffffff" stroke-width="3" transform="rotate(-45)"/>
+    <path d="M20,-30 L50,-60 L60,-50 L30,-20 Z M40,-40 L70,-10 L60,0 L30,-30 Z" 
+          fill="#e67e22" stroke="#ffffff" stroke-width="3"/>
+  </g>
+  
+  <!-- Right side - Math Pi symbol -->
+  <g transform="translate(1000, 315)">
+    <text x="0" y="25" font-family="Georgia, serif" font-size="120" font-weight="bold" 
+          fill="#2ecc71" stroke="#ffffff" stroke-width="3" text-anchor="middle">π</text>
+  </g>
+  
+  <!-- Center - Text content -->
+  <g transform="translate(600, 315)">
+    <!-- Background circle for text -->
+    <ellipse cx="0" cy="0" rx="280" ry="180" fill="#ffffff" opacity="0.95"/>
+    <ellipse cx="0" cy="0" rx="270" ry="170" fill="#1a472a"/>
+    
+    <!-- WNCC Text -->
+    <text x="0" y="-40" font-family="Arial, sans-serif" font-size="85" font-weight="bold" 
+          fill="#f4c430" text-anchor="middle">WNCC</text>
+    
+    <!-- STEM Text -->
+    <text x="0" y="40" font-family="Arial, sans-serif" font-size="75" font-weight="bold" 
+          fill="#ffffff" text-anchor="middle">STEM</text>
+    
+    <!-- Club Text -->
+    <text x="0" y="100" font-family="Arial, sans-serif" font-size="48" font-weight="bold" 
+          fill="#f4c430" text-anchor="middle">Club</text>
+  </g>
+  
+  <!-- Decorative border -->
+  <rect x="10" y="10" width="1180" height="610" fill="none" stroke="#f4c430" stroke-width="6" rx="15"/>
+</svg>

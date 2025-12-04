@@ -1,0 +1,247 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	color: rgb(249, 190, 0);
+	background-color: rgb(0, 58, 112);
+	margin: 0;
+	padding: 20px;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	line-height: 1.6;
+	min-height: 100vh;
+}
+
+#container {
+	max-width: 1200px;
+	margin: 0 auto;
+	background: rgba(255, 255, 255, 0.05);
+	border-radius: 20px;
+	padding: 40px;
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+	backdrop-filter: blur(10px);
+}
+
+h1 {
+	text-align: center;
+	font-size: 2.4em;
+	margin-bottom: 18px; /* add space so widget starts clearly below */
+	color: rgb(249, 190, 0);
+	clear: right; /* ensure it sits above floated PurpleAir widget */
+	border-bottom: 2px solid rgba(249,190,0,0.4);
+	padding-bottom: 6px;
+}
+
+h2 {
+	font-size: 1.8em;
+	margin: 30px 0 20px 0;
+	padding: 15px;
+	background: rgba(249, 190, 0, 0.1);
+	border-left: 4px solid rgb(249, 190, 0);
+	border-radius: 8px;
+}
+
+h3 {
+	/* font-size: 1.4em; */
+	margin: 25px 0 15px 0;
+	color: rgb(249, 190, 0);
+}
+
+
+/* High-contrast links */
+a, a:link, a:visited {
+    color: #ffe066;
+    text-decoration: none;
+    background-color: transparent;
+    transition: color 0.2s;
+}
+a:hover, a:focus {
+    color: #fffbe6;
+    background-color: #003366;
+    text-decoration: none;
+}
+
+/* High-contrast links (add .high-contrast-link to any link you want underlined) */
+a.high-contrast-link, a.high-contrast-link:link {
+	text-decoration: underline !important;
+}
+a.high-contrast-link:hover, a.high-contrast-link:focus {
+	text-decoration: underline !important;
+}
+
+.map-links {
+	list-style: none;
+	padding: 0;
+	margin: 20px 0; /* space above and below link list */
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 18px 16px; /* vertical gap 18px, horizontal gap 16px between links */
+}
+
+.map-links li {
+	margin: 0;
+	padding: 0;
+}
+
+.map-links a,
+.discord-link {
+	display: inline-block;
+	padding: 12px 22px; /* increased padding for better click area */
+	background: rgba(249, 190, 0, 0.1);
+	border: 2px solid rgba(249, 190, 0, 0.3);
+	border-radius: 10px;
+	text-decoration: none;
+	color: rgb(249, 190, 0);
+	transition: all 0.3s ease;
+	font-weight: 500;
+}
+
+.map-links a:hover,
+.discord-link:hover {
+	background: rgba(249, 190, 0, 0.2);
+	border-color: rgb(249, 190, 0);
+	transform: translateY(-2px);
+	box-shadow: 0 5px 15px rgba(249, 190, 0, 0.3);
+}
+
+.map-links a:visited,
+.discord-link:visited {
+	color: rgb(255, 165, 0);
+	border-color: rgba(255, 165, 0, 0.3);
+}
+
+.aquaponics-link:visited {
+	color: rgb(255, 165, 0);
+	border-color: rgba(255, 165, 0, 0.3);
+}
+
+.aquaponics-link {
+	display: inline-block;
+	padding: 15px 25px;
+	background: linear-gradient(45deg, rgba(30, 144, 255, 0.2), rgba(0, 100, 200, 0.2));
+	border: 2px solid rgba(30, 144, 255, 0.5);
+	border-radius: 12px;
+	text-decoration: none;
+	color: rgb(249, 190, 0);
+	transition: all 0.3s ease;
+	font-weight: 600;
+	font-size: 1.1em;
+}
+
+.aquaponics-link:hover {
+	background: linear-gradient(45deg, rgba(30, 144, 255, 0.3), rgba(0, 100, 200, 0.3));
+	border-color: dodgerblue;
+	transform: translateY(-2px);
+	box-shadow: 0 8px 20px rgba(30, 144, 255, 0.4);
+}
+
+/* Icon inside buttons/links */
+.aquaponics-link .icon {
+	display: inline-flex;
+	vertical-align: middle;
+	margin-right: 10px;
+}
+
+.aquaponics-link .icon svg {
+	width: 20px;
+	height: 20px;
+	fill: currentColor; /* inherit link color */
+	display: block;
+}
+
+.aquaponics-link .link-text {
+	vertical-align: middle;
+}
+
+.discord-section {
+	margin-top: 40px;
+	padding: 25px;
+	background: rgba(88, 101, 242, 0.1);
+	border-radius: 15px;
+	border: 1px solid rgba(88, 101, 242, 0.3);
+}
+
+.discord-section h3 {
+	color: rgb(249, 190, 0);
+	text-align: center;
+	margin-top: 0px;
+	margin-bottom: 20px;
+}
+
+.discord-links {
+	display: flex;
+	flex-direction: row;
+	gap: 15px;
+	align-items: center;
+	text-decoration: none;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+/* PurpleAir widget integration */
+.purpleair-widget-float {
+  float: right;
+  margin: 0 0 1em 2em;
+  max-width: 320px;
+  min-width: 220px;
+  width: 100%;
+}
+@media (max-width: 768px) {
+  .purpleair-widget-float {
+    float: none;
+    margin: 1em 0;
+    max-width: 100%;
+  }
+}
+
+/* Fixed viewport PurpleAir widget (Option 1) */
+/* .purpleair-widget-fixed (legacy style removed) */
+
+/* Inline (in-container) PurpleAir widget */
+.purpleair-inline {
+	float: right;
+	width: 190px; /* smaller width */
+	max-width: 28%;
+	min-width: 160px;
+	margin: 4px 0 0.7em 1em;
+	background: rgba(0,34,68,0.4);
+	border: 1px solid rgba(255,255,255,0.28);
+	border-radius: 9px;
+	padding: 3px 5px;
+	box-shadow: 0 4px 12px rgba(0,0,0,0.45);
+	font-size: 0.8rem; /* smaller text */
+	line-height: 1.15;
+	transform: translateZ(0); /* ensure crisp rendering */
+}
+
+@media (max-width: 600px) {
+	.purpleair-inline { 
+		float: none; 
+		margin: 0 0 1em 0; 
+		max-width: 100%; 
+		width: 100%;
+	}
+}
+
+@media (max-width: 768px) {
+	#container {
+		padding: 25px;
+		margin: 10px;
+	}
+
+	h1 {
+		font-size: 2.2em;
+	}
+
+	h2 {
+		font-size: 1.5em;
+	}
+
+	.map-links a,
+	.discord-link,
+	.aquaponics-link {
+		padding: 10px 15px;
+		font-size: 0.9em;
+	}
+}
